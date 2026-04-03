@@ -1,71 +1,9 @@
 import { useState } from 'react';
 import { Clock, ChevronDown, ChevronUp } from 'lucide-react';
+import { useAppStore } from '../context/AppContext';
+import { BlogPost } from '../types';
 
-interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  content: string[];
-  image: string;
-  category: string;
-  readTime: string;
-  date: string;
-  emoji: string;
-}
 
-const posts: BlogPost[] = [
-  {
-    id: 1,
-    title: 'Bí quyết làm sinh tố thơm ngon, giữ nguyên dưỡng chất',
-    excerpt: 'Sinh tố ngon không chỉ phụ thuộc vào nguyên liệu mà còn ở cách xay và tỷ lệ pha trộn. Bột Drinks chia sẻ bí quyết để mỗi ly sinh tố đều mịn, thơm và đầy đủ dưỡng chất.',
-    content: [
-      '🥤 **Chọn trái cây đúng độ chín**: Trái cây vừa chín tới cho vị ngọt tự nhiên tốt nhất. Tránh dùng trái cây quá xanh hoặc quá chín.',
-      '🧊 **Thêm đá đúng thời điểm**: Cho đá vào sau trái cây, không trước, để tránh tạo túi khí làm sinh tố không mịn.',
-      '⏱ **Xay từng giai đoạn**: Bắt đầu tốc độ thấp 10 giây, sau đó tốc độ cao 30 giây. Không xay liên tục quá lâu sẽ làm nóng hỗn hợp và giảm vitamin.',
-      '🍃 **Tỷ lệ vàng**: 60% trái cây + 30% sữa/nước dừa + 10% đá. Điều chỉnh theo khẩu vị.',
-      '🚫 **Không thêm đường trắng**: Độ ngọt từ trái cây chín là đủ. Nếu cần, thêm mật ong nguyên chất thay thế.',
-    ],
-    image: 'https://images.unsplash.com/photo-1638176311291-36b0eacc6b08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
-    category: 'Sinh tố',
-    readTime: '4 phút',
-    date: '28/03/2026',
-    emoji: '🥤',
-  },
-  {
-    id: 2,
-    title: 'Cách pha trà trái cây đúng chuẩn – Thơm ngon như quán',
-    excerpt: 'Trà trái cây không chỉ đẹp mắt mà còn là thức uống giàu vitamin và chống oxy hóa. Cùng Bột Drinks khám phá quy trình pha chế chuẩn để có ly trà hoàn hảo.',
-    content: [
-      '🍵 **Chọn loại trà nền**: Trà xanh phù hợp với các loại quả nhẹ nhàng (lê, đào). Trà đen hợp với trái cây nhiệt đới (xoài, chanh dây).',
-      '🌡 **Pha trà đúng nhiệt độ**: Trà xanh: 80°C. Trà đen: 95°C. Nhiệt độ sai làm trà bị đắng hoặc nhạt.',
-      '🍑 **Hãm trái cây tươi**: Đun nhỏ lửa 5–7 phút với ít đường và nước để ra syrup trái cây tự nhiên.',
-      '🧊 **Pha theo tỷ lệ**: 150ml trà pha đặc + 50ml syrup trái cây + đá viên. Khuấy đều trước khi rót.',
-      '🌿 **Trang trí để tăng hương**: Thêm vài lá bạc hà hoặc lát chanh tươi vừa đẹp vừa thơm tự nhiên.',
-    ],
-    image: 'https://images.unsplash.com/photo-1630209684693-cf71c3976e62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
-    category: 'Trà trái cây',
-    readTime: '5 phút',
-    date: '20/03/2026',
-    emoji: '🍵',
-  },
-  {
-    id: 3,
-    title: 'Lợi ích sức khỏe của nước ép trái cây tươi mỗi ngày',
-    excerpt: 'Uống một ly nước ép trái cây tươi mỗi sáng không chỉ cung cấp vitamin mà còn hỗ trợ tiêu hóa, làm sáng da và tăng cường miễn dịch. Hãy cùng tìm hiểu!',
-    content: [
-      '💊 **Vitamin C dồi dào**: Cam, dứa, chanh dây cung cấp lượng lớn vitamin C giúp tăng đề kháng, sáng da.',
-      '🔥 **Hỗ trợ tiêu hóa**: Enzym bromelain trong nước ép dứa giúp phân giải protein, giảm đầy hơi.',
-      '🧠 **Cải thiện não bộ**: Nước ép nho đỏ chứa resveratrol – chất chống oxy hóa mạnh, tốt cho trí nhớ.',
-      '⚖️ **Hỗ trợ cân nặng**: Nước ép dưa hấu, cần tây ít calo, giàu nước – lý tưởng cho người muốn duy trì vóc dáng.',
-      '⏰ **Uống đúng thời điểm**: Uống lúc bụng đói buổi sáng giúp hấp thu dưỡng chất tối đa.',
-    ],
-    image: 'https://images.unsplash.com/photo-1621878974675-91a5f1809ace?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
-    category: 'Nước ép',
-    readTime: '3 phút',
-    date: '12/03/2026',
-    emoji: '🍊',
-  },
-];
 
 const categoryColor: Record<string, string> = {
   'Sinh tố': 'bg-pink-100 text-pink-700',
@@ -104,7 +42,7 @@ function BlogCard({ post }: { post: BlogPost }) {
         </p>
 
         {/* Expandable content */}
-        {expanded && (
+        {expanded && post.content && (
           <div className="mb-4 space-y-2 border-t border-border pt-4">
             {post.content.map((line, i) => (
               <p key={i} className="text-sm text-foreground leading-relaxed">
@@ -134,6 +72,8 @@ function BlogCard({ post }: { post: BlogPost }) {
 }
 
 export function Blog() {
+  const { blogs } = useAppStore();
+  
   return (
     <section id="blog" className="py-20 bg-secondary/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -147,8 +87,8 @@ export function Blog() {
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+          {blogs.map((post, idx) => (
+            <BlogCard key={post.id || idx} post={{...post, emoji: post.emoji || '📰', category: post.category || 'Tin tức', readTime: post.readTime || '3 phút'}} />
           ))}
         </div>
       </div>

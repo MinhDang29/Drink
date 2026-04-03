@@ -1,5 +1,5 @@
 import { X, Minus, Plus, ShoppingBag } from 'lucide-react';
-import { Product } from './ProductCard';
+import { Product } from '../types';
 
 export interface CartItem extends Product {
   quantity: number;
@@ -11,9 +11,10 @@ interface CartProps {
   items: CartItem[];
   onUpdateQuantity: (id: number, quantity: number) => void;
   onRemove: (id: number) => void;
+  onCheckout?: () => void;
 }
 
-export function Cart({ isOpen, onClose, items, onUpdateQuantity, onRemove }: CartProps) {
+export function Cart({ isOpen, onClose, items, onUpdateQuantity, onRemove, onCheckout }: CartProps) {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   if (!isOpen) return null;
@@ -98,7 +99,7 @@ export function Cart({ isOpen, onClose, items, onUpdateQuantity, onRemove }: Car
                 <span className="text-muted-foreground">Tổng cộng</span>
                 <span className="text-destructive">{total.toLocaleString('vi-VN')}₫</span>
               </div>
-              <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg hover:bg-primary/90 transition-colors">
+              <button onClick={onCheckout} className="w-full bg-primary text-primary-foreground py-3 rounded-lg hover:bg-primary/90 transition-colors">
                 Thanh toán
               </button>
             </div>

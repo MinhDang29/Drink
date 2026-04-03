@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { ShoppingCart, Menu, X, User } from 'lucide-react';
 
 interface HeaderProps {
   cartItemCount: number;
   onCartClick: () => void;
+  onUserClick: () => void;
 }
 
-export function Header({ cartItemCount, onCartClick }: HeaderProps) {
+export function Header({ cartItemCount, onCartClick, onUserClick }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks = [
@@ -44,6 +45,13 @@ export function Header({ cartItemCount, onCartClick }: HeaderProps) {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
+            <button
+              onClick={onUserClick}
+              className="relative p-2 hover:bg-accent rounded-lg transition-colors"
+              aria-label="Tài khoản"
+            >
+              <User className="w-6 h-6" />
+            </button>
             <button
               onClick={onCartClick}
               className="relative p-2 hover:bg-accent rounded-lg transition-colors"

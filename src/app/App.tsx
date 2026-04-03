@@ -1,129 +1,15 @@
 import { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { ProductCard, Product } from './components/ProductCard';
+import { ProductCard } from './components/ProductCard';
 import { Cart, CartItem } from './components/Cart';
 import { Origin } from './components/Origin';
 import { Blog } from './components/Blog';
 import { MapPin, Phone, Clock, Facebook, Instagram } from 'lucide-react';
-
-const allProducts: Product[] = [
-  // Nước ép
-  {
-    id: 1,
-    name: 'Nước ép cam tươi',
-    price: 35000,
-    image: 'https://images.unsplash.com/photo-1641659735894-45046caad624?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Nước ép cam tự nhiên 100%, giàu vitamin C, ngọt thanh',
-    category: 'Nước ép',
-  },
-  {
-    id: 2,
-    name: 'Nước ép dâu tây',
-    price: 45000,
-    image: 'https://images.unsplash.com/photo-1568288192047-cf22326a2c3d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Nước ép dâu tây tươi ngon, giàu chất chống oxy hóa',
-    category: 'Nước ép',
-  },
-  {
-    id: 3,
-    name: 'Nước ép xoài',
-    price: 40000,
-    image: 'https://images.unsplash.com/photo-1697642452436-9c40773cbcbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Nước ép xoài thơm ngọt, bổ dưỡng, đậm hương nhiệt đới',
-    category: 'Nước ép',
-  },
-  {
-    id: 4,
-    name: 'Nước ép dứa',
-    price: 38000,
-    image: 'https://images.unsplash.com/photo-1665582513044-376da77ebec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Nước ép dứa tươi mát, tốt cho tiêu hóa, giải nhiệt',
-    category: 'Nước ép',
-  },
-  {
-    id: 5,
-    name: 'Nước ép chanh dây',
-    price: 42000,
-    image: 'https://images.unsplash.com/photo-1606758037375-a2a76453407a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Nước ép chanh dây chua ngọt, hương thơm đặc trưng',
-    category: 'Nước ép',
-  },
-  {
-    id: 6,
-    name: 'Nước ép dưa hấu',
-    price: 33000,
-    image: 'https://images.unsplash.com/photo-1762898841702-244e320da5b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Nước ép dưa hấu tươi mát, mát lạnh giải nhiệt ngày hè',
-    category: 'Nước ép',
-  },
-  // Sinh tố
-  {
-    id: 7,
-    name: 'Sinh tố dâu chuối',
-    price: 45000,
-    image: 'https://images.unsplash.com/photo-1604503036177-6ac038850279?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Sinh tố dâu chuối mịn ngon, thơm béo, nhiều vitamin',
-    category: 'Sinh tố',
-  },
-  {
-    id: 8,
-    name: 'Sinh tố bơ',
-    price: 50000,
-    image: 'https://images.unsplash.com/photo-1630252595285-3bbcb51378d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Sinh tố bơ béo ngậy, giàu chất béo lành mạnh và kali',
-    category: 'Sinh tố',
-  },
-  {
-    id: 9,
-    name: 'Sinh tố nhiệt đới',
-    price: 48000,
-    image: 'https://images.unsplash.com/photo-1530026436513-3d6e27ae5199?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Hỗn hợp xoài, dứa, dừa – cảm giác như đang ở biển',
-    category: 'Sinh tố',
-  },
-  {
-    id: 10,
-    name: 'Sinh tố khoai môn',
-    price: 52000,
-    image: 'https://images.unsplash.com/photo-1756969953423-2c199c6dbd79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Sinh tố khoai môn tím đẹp mắt, vị ngọt béo tự nhiên',
-    category: 'Sinh tố',
-  },
-  // Trà trái cây
-  {
-    id: 11,
-    name: 'Trà đào cam sả',
-    price: 40000,
-    image: 'https://images.unsplash.com/photo-1676693420436-7fa448f054eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Trà đào kết hợp cam và sả, thanh mát và thơm dịu',
-    category: 'Trà trái cây',
-  },
-  {
-    id: 12,
-    name: 'Trà chanh dây lạnh',
-    price: 38000,
-    image: 'https://images.unsplash.com/photo-1757857152069-f1e43f10a856?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Trà chanh dây lạnh chua nhẹ, ngọt thanh, sảng khoái',
-    category: 'Trà trái cây',
-  },
-  {
-    id: 13,
-    name: 'Trà vải thiều',
-    price: 42000,
-    image: 'https://images.unsplash.com/photo-1630209684693-cf71c3976e62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Trà vải hồng thơm ngát, hương vị đặc trưng mùa hè',
-    category: 'Trà trái cây',
-  },
-  {
-    id: 14,
-    name: 'Trà gừng mật ong',
-    price: 35000,
-    image: 'https://images.unsplash.com/photo-1766186471216-61060e5ceb53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400',
-    description: 'Trà gừng mật ong ấm nồng, tăng sức đề kháng hiệu quả',
-    category: 'Trà trái cây',
-  },
-];
+import { useAppStore } from './context/AppContext';
+import { AuthModal } from './components/AuthModal';
+import { UserModal } from './components/UserModal';
+import { Product } from './types';
 
 const categories = ['Tất cả', 'Nước ép', 'Sinh tố', 'Trà trái cây'];
 
@@ -158,9 +44,13 @@ const features = [
 ];
 
 export default function App() {
+  const { products, currentUser, isStoreOpen, addOrder } = useAppStore();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('Tất cả');
+  
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
 
   const handleAddToCart = (product: Product) => {
     setCartItems((prev) => {
@@ -188,12 +78,16 @@ export default function App() {
 
   const filteredProducts =
     activeCategory === 'Tất cả'
-      ? allProducts
-      : allProducts.filter((p) => p.category === activeCategory);
+      ? products
+      : products.filter((p) => p.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-background">
-      <Header cartItemCount={totalItems} onCartClick={() => setIsCartOpen(true)} />
+      <Header 
+        cartItemCount={totalItems} 
+        onCartClick={() => setIsCartOpen(true)} 
+        onUserClick={() => { currentUser ? setIsUserModalOpen(true) : setIsAuthModalOpen(true) }}
+      />
 
       <Hero />
 
@@ -227,6 +121,11 @@ export default function App() {
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Tất cả đều được làm từ trái cây tươi 100%, pha chế trong ngày — không tồn đọng, không đông lạnh.
             </p>
+            {!isStoreOpen && (
+              <div className="mt-6 inline-block bg-destructive/10 text-destructive px-6 py-2 rounded-xl font-medium">
+                Cửa hàng hiện đang đóng cửa. Vui lòng quay lại sau!
+              </div>
+            )}
           </div>
 
           {/* Category Tabs */}
@@ -248,7 +147,7 @@ export default function App() {
                       activeCategory === cat ? 'bg-white/20' : 'bg-secondary'
                     }`}
                   >
-                    {allProducts.filter((p) => p.category === cat).length}
+                    {products.filter((p) => p.category === cat).length}
                   </span>
                 )}
               </button>
@@ -435,7 +334,32 @@ export default function App() {
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemove={handleRemoveItem}
+        onCheckout={() => {
+          if (!currentUser) {
+            setIsCartOpen(false);
+            setIsAuthModalOpen(true);
+            return false;
+          }
+          if (!isStoreOpen) {
+            alert('Cửa hàng hiện đang đóng cửa!');
+            return false;
+          }
+          const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+          addOrder({
+            id: 'DH' + Math.random().toString(36).substr(2, 5).toUpperCase(),
+            date: new Date().toLocaleDateString('vi-VN'),
+            items: cartItems.map(i => ({ productId: i.id, name: i.name, quantity: i.quantity, price: i.price })),
+            total
+          });
+          setCartItems([]);
+          alert('Đặt hàng thành công! Xem trong hồ sơ của bạn.');
+          setIsCartOpen(false);
+          return true;
+        }}
       />
+      
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <UserModal isOpen={isUserModalOpen} onClose={() => setIsUserModalOpen(false)} />
     </div>
   );
 }
