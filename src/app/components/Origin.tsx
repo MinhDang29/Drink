@@ -1,4 +1,4 @@
-import originPhoto from 'figma:asset/18c26906dccea54f128a8550feb6b787d70075f8.png';
+import originPhoto from '../../assets/18c26906dccea54f128a8550feb6b787d70075f8.png';
 
 const steps = [
   {
