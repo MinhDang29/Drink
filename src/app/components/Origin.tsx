@@ -48,11 +48,11 @@ export function Origin() {
 
         {/* Image + Story */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-          <div className="rounded-2xl overflow-hidden shadow-lg">
+          <div className="rounded-2xl overflow-hidden shadow-lg h-auto">
             <img
               src={originPhoto}
               alt="Mộng Tiên – Người sáng lập Bột Drinks"
-              className="w-full h-80 md:h-96 object-cover object-top"
+              className="w-full h-auto object-cover"
             />
           </div>
           <div>

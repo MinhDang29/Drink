@@ -353,14 +353,18 @@ export default function App() {
               </p>
               <div className="flex gap-3 mt-4">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/thmtin.05"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors"
                   aria-label="Facebook"
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/thmtin05"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors"
                   aria-label="Instagram"
                 >
